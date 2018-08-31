@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title></title>
+<link rel="stylesheet" media="all" type="text/css" href="style.css" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+    function AjaxFormRequest(result_id,formMain,url) {
+                jQuery.ajax({
+                    url:     url,
+                    type:     "POST",
+                    dataType: "html",
+                    data: jQuery("#"+formMain).serialize(), 
+                    success: function(response) {
+                    document.getElementById(result_id).innerHTML = response;
+                },
+                error: function(response) {
+                document.getElementById(result_id).innerHTML = "<p>Возникла ошибка при отправке формы. Попробуйте еще раз</p>";
+                }
+             });
+
+             $(':input','#formMain')
+ 				.not(':button, :submit, :reset, :hidden')
+ 				.val('')
+ 				.removeAttr('checked')
+ 				.removeAttr('selected');
+    }
+</script>
+</head>
+<body>
+<div>
+   <div class="form">
+    <div id="messegeResult">
+        <p> Введите текст </p>
+    </div>
+       
+    <form method="post" action="" id="formMain" name="formMain">
+		<textarea rows="5" cols="20" name="message" required></textarea>
+        <input id="button" type="button"  value="Оправить" onclick="AjaxFormRequest('messegeResult', 'formMain', 'form.php')"/>
+    </form>
+   </div>
+</div>
+</body>
+</html>
